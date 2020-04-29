@@ -14,9 +14,14 @@ steps:
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
+    containerregistrytype: 'Azure Container Registry'
     azureSubscriptionEndpoint: 'ReactTutorialv1 - Azure'
-    azureContainerRegistry: reacttutorialv1acr.azurecr.io
+    azureContainerRegistry: 'reacttutorialv1acr.azurecr.io'
+    command: 'Build an image'
+    dockerFile: '**/Dockerfile'
     imageName: 'reacttutorialv1:$(Build.BuildId)'
+    includeSourceTags: true
+    includeLatestTag: true
 
 - task: Docker@1
   displayName: 'Push an image'
