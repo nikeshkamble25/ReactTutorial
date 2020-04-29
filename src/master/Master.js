@@ -6,7 +6,7 @@ import * as actions from '../_actions';
 import { connect } from 'react-redux';
 
 class App extends React.Component {
-	Title = 'Task Manager V10';
+	Title = 'Task Manager V11';
 	constructor() {
 		super();
 		this.AddTask = this.AddTask.bind(this);
