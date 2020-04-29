@@ -1,0 +1,27 @@
+pool:
+  name: Hosted Ubuntu 1604
+steps:
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Azure Deployment:Create Azure Container Registry'
+  inputs:
+    azureSubscription: 'ReactTutorialv1 - Azure'
+    resourceGroupName: 'ReactTutorialv1-rg'
+    location: 'South Central US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/Microsoft/devops-project-samples/057f6cc268a62922d012067d069d58684e967d0a/armtemplates/webapp-containers/containerRegistry-template.json'
+    overrideParameters: '-registryName "ReactTutorialv1acr" -registryLocation "South Central US" -registrySku "Standard"'
+
+- task: Docker@1
+  displayName: 'Build an image'
+  inputs:
+    azureSubscriptionEndpoint: 'ReactTutorialv1 - Azure'
+    azureContainerRegistry: reacttutorialv1acr.azurecr.io
+    imageName: 'reacttutorialv1:$(Build.BuildId)'
+
+- task: Docker@1
+  displayName: 'Push an image'
+  inputs:
+    azureSubscriptionEndpoint: 'ReactTutorialv1 - Azure'
+    azureContainerRegistry: reacttutorialv1acr.azurecr.io
+    command: 'Push an image'
+    imageName: 'reacttutorialv1:$(Build.BuildId)'
